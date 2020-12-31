@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+        <title>Hello, world!</title>
+
+        <style>
+            .helpMsg {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body class="bg-light">
+        <div class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+
+
+                    <form class="shadow-lg bg-white p-3" th:object="${people}" action="/form" th:action="@{~/form}" method="POST" autocomplete="on">
+                        <fieldset>
+                            <legend class="text-center" style="font-family: monospace; font-size: 2em;">Form</legend>
+                            <div class="mb-3">
+                                <label for="nameInput" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="nameInput" th:field="*{name}" name="name" autofocus="on" placeholder="John Bill">
+                                <div class="form-text text-danger helpMsg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="emailInput" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="emailInput" th:field="*{emailAddress}" name="email" placeholder="john@example.com">
+                                <div class="form-text text-danger helpMsg" th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ageRange" class="form-label">Age: <b id="ageDisplay"></b></label>
+                                <input type="range" class="form-range" min="12" max="100" id="ageRange" th:field="*{age}">
+                                <div class="form-text text-danger helpMsg" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneInput" class="form-label">Phone number</label>
+                                <input type="text" class="form-control" id="phoneInput" th:field="*{phone}" placeholder="+xx(xx)9xxx-xxx">
+                                <div class="form-text text-danger helpMsg" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="selectInput">Profission</label>
+                                <select class="form-select" id="selectInput" name="profission" th:field=*{profession}>
+                                    <option th:each="prof : ${professions}" th:value="${prof}" th:text="${prof}"></option>
+                                </select>
+                            </div>
+                            <div class="mb-3 form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="rememberCheck" th:field="*{rememberMe}">
+                                <label class="form-check-label" for="RememberCheck">Remember me</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="sex" value="MALE" id="maleCheck" th:field="*{sex}">
+                                <label class="form-check-label" for="maleCheck">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="sex" value="FEMALE" id="femaleCheck" th:field="*{sex}">
+                                <label class="form-check-label" for="femaleCheck">Female</label>
+                            </div>
+                            <div class="form-text text-danger helpMsg" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></div>
+                            <button type="submit" class="btn-sm btn-primary d-block w-100 mt-4">Submit</button>
+                        </fieldset>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+        <script>
+            const ageRage = document.querySelector("#ageRange");
+            ageRange.onchange = ageRange.oninput = () => {
+                document.querySelector("#ageDisplay").innerText = ageRange.value;
+            };
+
+            window.onload = document.querySelector("#ageDisplay").innerText = ageRange.value;
+        </script>
+    </body>
+</html>
